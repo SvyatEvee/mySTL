@@ -8,7 +8,8 @@ set(SOURCES main.cpp
     myvector.h
     myExceptions.h
     myIterator.h)
-add_executable(MySTL ${SOURCES})
+add_executable(MySTL ${SOURCES}
+    myList.h)
 
 include(GNUInstallDirs)
 install(TARGETS MySTL

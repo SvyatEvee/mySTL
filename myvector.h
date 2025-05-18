@@ -59,54 +59,6 @@ namespace mystd {
         }       
 
     public:
-        // Реализация итератора для класса myVector
-        class iterator : public base_iterator<mystd::random_access_iterator_tag, T> {
-            T* ptr_;
-
-            
-
-            explicit iterator(T* ptr = nullptr) : ptr_(ptr)
-                {}
-        public:
-            friend class myVector;
-            using typename base_iterator::difference_type;
-            iterator() : ptr_(nullptr)
-                {}
-            
-
-            // Разыменовывание
-            T& operator* () const { return *ptr_; }
-            T* operator->() const { return  ptr_; }
-
-            // Increment/Decrement
-            iterator& operator++()    { ++ptr_; return *this; }
-            iterator  operator++(int) { iterator tmp = *this; ++ptr_; return tmp; }
-            iterator& operator--()    { --ptr_; return *this; }
-            iterator  operator--(int) { iterator tmp = *this; --ptr_; return tmp; }
-            
-            // Арифметические операции
-            iterator  operator+ (difference_type n) const { return iterator(ptr_ + n); }
-            iterator  operator- (difference_type n) const { return iterator(ptr_ - n); }
-            iterator& operator+=(difference_type n) { ptr_ += n;  return *this; }
-            iterator& operator-=(difference_type n) { ptr_ -= n;  return *this; }
-            difference_type operator-(const iterator& other) const { return ptr_ - other.ptr_; }
-            
-            // Операции сравнения
-            bool operator == (const iterator & other) const { return ptr_ == other.ptr_; }
-            bool operator != (const iterator & other) const { return ptr_ != other.ptr_; }
-            bool operator >  (const iterator & other) const { return ptr_ >  other.ptr_; }
-            bool operator <  (const iterator & other) const { return ptr_ <  other.ptr_; }
-            bool operator >= (const iterator & other) const { return ptr_ >= other.ptr_; }
-            bool operator <= (const iterator & other) const { return ptr_ <= other.ptr_; }
-
-            // Получение значения по индексу от указателя
-            T& operator[](difference_type n) const { return ptr_[n]; }
-
-        };
-
-        /********** Методы для работы с итераторами ************/
-        iterator begin() { return iterator(data_); }
-        iterator end()   { return iterator(data_ + size_); }
 
         /********* Конструкторы и деструктор класса **********/
         myVector() : size_(0), capacity_(start_length)
@@ -148,10 +100,62 @@ namespace mystd {
             std::copy(init_list.begin(), init_list.end(), data_);
         }
 
+        // ДОБАВИТЬ КОНСТРУКТОР, КОТОРЫЙ МОГ БЫ РАБОАТЬ С ИТЕРАТОРАМИ!!!!!!
+
         virtual ~myVector()
         {
             delete[] data_;
         }
+
+
+        // Реализация итератора для класса myVector
+        class iterator : public base_iterator<mystd::random_access_iterator_tag, T> {
+            T* ptr_;
+
+
+
+            explicit iterator(T* ptr = nullptr) : ptr_(ptr)
+            {}
+        public:
+            friend class myVector;
+            using typename base_iterator::difference_type;
+            iterator() : ptr_(nullptr)
+            {}
+
+
+            // Разыменовывание
+            T& operator* () const { return *ptr_; }
+            T* operator->() const { return  ptr_; }
+
+            // Increment/Decrement
+            iterator& operator++() { ++ptr_; return *this; }
+            iterator  operator++(int) { iterator tmp = *this; ++ptr_; return tmp; }
+            iterator& operator--() { --ptr_; return *this; }
+            iterator  operator--(int) { iterator tmp = *this; --ptr_; return tmp; }
+
+            // Арифметические операции
+            iterator  operator+ (difference_type n) const { return iterator(ptr_ + n); }
+            iterator  operator- (difference_type n) const { return iterator(ptr_ - n); }
+            iterator& operator+=(difference_type n) { ptr_ += n;  return *this; }
+            iterator& operator-=(difference_type n) { ptr_ -= n;  return *this; }
+            difference_type operator-(const iterator& other) const { return ptr_ - other.ptr_; }
+
+            // Операции сравнения
+            bool operator == (const iterator& other) const { return ptr_ == other.ptr_; }
+            bool operator != (const iterator& other) const { return ptr_ != other.ptr_; }
+            bool operator >  (const iterator& other) const { return ptr_ > other.ptr_; }
+            bool operator <  (const iterator& other) const { return ptr_ < other.ptr_; }
+            bool operator >= (const iterator& other) const { return ptr_ >= other.ptr_; }
+            bool operator <= (const iterator& other) const { return ptr_ <= other.ptr_; }
+
+            // Получение значения по индексу от указателя
+            T& operator[](difference_type n) const { return ptr_[n]; }
+
+        };
+
+        /********** Методы для работы с итераторами ************/
+        iterator begin() { return iterator(data_); }
+        iterator end() { return iterator(data_ + size_); }
 
         /********* Переопределенные операции **********/
         myVector& operator=(const myVector& other)
@@ -240,6 +244,9 @@ namespace mystd {
         {
             return data_;
         }
+
+
+
 
         
     };
