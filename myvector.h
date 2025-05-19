@@ -1,12 +1,10 @@
 #ifndef MYVECTOR_H
 #define MYVECTOR_H
 
-#include <iostream>
-#include <numeric>
+
 #include <initializer_list>
 #include "myExceptions.h"
 #include "myIterator.h"
-#include <algorithm>
 
 
 namespace mystd {
@@ -110,15 +108,20 @@ namespace mystd {
 
         // Реализация итератора для класса myVector
         class iterator : public base_iterator<mystd::random_access_iterator_tag, T> {
-            T* ptr_;
+            T* ptr_{ nullptr };
 
 
 
-            explicit iterator(T* ptr = nullptr) : ptr_(ptr)
+            explicit iterator(T* ptr) : ptr_(ptr)
             {}
         public:
-            friend class myVector;
+            using typename base_iterator::iterator_category;
+            using typename base_iterator::value_type;
             using typename base_iterator::difference_type;
+            using typename base_iterator::pointer;
+            using typename base_iterator::reference;
+            friend class myVector;
+            
             iterator() : ptr_(nullptr)
             {}
 
@@ -127,7 +130,7 @@ namespace mystd {
             T& operator* () const { return *ptr_; }
             T* operator->() const { return  ptr_; }
 
-            // Increment/Decrement
+            // Инкремент/Декремент
             iterator& operator++() { ++ptr_; return *this; }
             iterator  operator++(int) { iterator tmp = *this; ++ptr_; return tmp; }
             iterator& operator--() { --ptr_; return *this; }

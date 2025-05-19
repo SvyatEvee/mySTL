@@ -1,11 +1,9 @@
-#include "myvector.h"
-#include <vector>
-#include <utility>
-#include <algorithm>
-#include "myList.h"
-#include <random>
-#include <list>
 
+
+#include "myvector.h"
+#include "myList.h"
+#include <iostream>
+#include <algorithm>
 using namespace mystd;
 
 
@@ -13,16 +11,26 @@ using namespace mystd;
 
 int main()
 {
+	
 	using namespace std;
 
-	myList<int> lst{ 1,2,3,4,5,6};
-	
-	lst.pop_back();
-	lst.pop_front();
+	/*myList<int> lst{ 1,2,3,4,5 };
+	myList<int> lst2(lst.size());*/
 
-	lst.push_back(578);
-	lst.push_front(578);
+	myVector<int> lst{ 1,2,3,4,5 };
+	myVector<int> lst2(lst.size());
+
+	for (auto i : lst)
+		cout << i << " ";
+	cout << endl;
 	
+	transform(lst.begin(), lst.end(), lst2.begin(), [](int a) { return a * 2; });
+
+	for (auto i : lst2)
+		cout << i << " ";
+	cout << endl;
+	
+
 }
 
 /*static_assert(std::is_same_v<
